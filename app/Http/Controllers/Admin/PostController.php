@@ -48,7 +48,7 @@ class PostController extends Controller
     {   
         // dd($request->all());
         //validazione dati
-        $request->validate($this->validationRules);
+        $request->validate($this->validationRules); //richiamo l'array delle valiazioni
 
         //creazione post
         $data = $request->all();
@@ -90,7 +90,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view('admin.posts.edit', compact("post"));
+        $categories = Category::all();
+        return view('admin.posts.edit', compact("post","categories"));
     }
 
     /**
@@ -103,7 +104,7 @@ class PostController extends Controller
     public function update(Request $request, Post $post)
     {
         //validazione dati
-        $request->validate($this->validationRules);
+        $request->validate($this->validationRules); //richiamo l'array delle valiazioni
         // dd($request->all());
 
         //aggiornamento post all'interno del DB
@@ -127,6 +128,7 @@ class PostController extends Controller
         }
         $post->content = $data["content"];
         $post->published = isset( $data["published"]);
+        $post->category_id = $data["category_id"];
 
         $post->save();
         return view('admin.posts.show', compact("post"));
