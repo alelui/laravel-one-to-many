@@ -15,6 +15,12 @@
                     @else
                         <span class="badge badge-warning">Bozza</span>
                     @endif
+                    <div class="category">
+                        
+                        @if ($post->category) {{-- categoy rappresenta la classe nel model (public function), cosi facendo creiamo una join --}}
+                        <span class="badge badge-info">{{$post->category->name}}</span> 
+                        @endif
+                    </div>
                 </div>
             </div>
             <a href="{{route('posts.edit', $post->id)}}"><button type="button" class="btn mt-4 btn-dark">Modifica</button></a>

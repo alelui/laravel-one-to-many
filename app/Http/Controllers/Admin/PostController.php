@@ -14,6 +14,7 @@ class PostController extends Controller
         "title" => 'required|string|max:100',
         "content" => 'required|string',
         "published" => 'sometimes|accepted',
+        "category_id" => 'nullable|exists:categories,id' // può essere nullo|verificase esite id nella tabella categories
     ];
     /**
      * Display a listing of the resource.
@@ -45,6 +46,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {   
+        // dd($request->all());
         //validazione dati
         $request->validate($this->validationRules);
 
@@ -54,6 +56,7 @@ class PostController extends Controller
         $newPost->title = $data["title"];
         $newPost->content = $data["content"];
         $newPost->published = isset( $data["published"]);
+        $newPost->category_id = $data["category_id"];
 
         $slug = Str::of($newPost->title)->slug('-');
         $count = 1;
