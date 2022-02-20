@@ -9,7 +9,7 @@
                     <h2>Nuovo Post</h2>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('posts.store')}}" method="POST">
+                    <form action="{{route('posts.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
                         <div class="form-group">
                           <label for="title">Titolo</label>
@@ -36,6 +36,12 @@
                             @error('category_id')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
+                        </div>
+                        <div class="form-group">
+                            <div class="custom-file">
+                                <input type="file" class="custom-file-input" id="image" name="image">
+                                <label class="custom-file-label" for="customFile">Choose file</label>
+                              </div>
                         </div>
                         <div class="form-group form-check">
                           <input type="checkbox" class="form-check-input" @error('published') is-invalid @enderror id="published" name="published">

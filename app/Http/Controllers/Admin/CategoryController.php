@@ -86,7 +86,9 @@ class CategoryController extends Controller
      */
     public function update(Request $request, Category $category)
     {
-        //validazione dati richiamnda array
+        //validazione dati richiamndo funzione protected
+        //$request->validate($this->validationRules);
+        //validazione dati
         $request->validate([
             "name" => "required|string|max:100|unique:categories,name,{$category->id}"
         ]);

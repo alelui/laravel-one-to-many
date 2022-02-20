@@ -9,6 +9,11 @@
                     <h2>{{$post->title}}</h2>
                 </div>
                 <div class="card-body">
+                    <div class="image-box col-3 mb-3">
+                        @if ($post->image)
+                            <img class="w-100" src="{{asset("storage/$post->image")}}" alt="{{$post->title}}">
+                        @endif
+                    </div>
                     <p>{{$post->content}}</p>
                     @if ($post->published)
                         <span class="badge badge-success">Pubblicato</span>

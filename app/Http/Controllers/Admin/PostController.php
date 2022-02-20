@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 Use App\Post;
 use App\Category;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 class PostController extends Controller
@@ -14,7 +15,10 @@ class PostController extends Controller
         "title" => 'required|string|max:100',
         "content" => 'required|string',
         "published" => 'sometimes|accepted',
-        "category_id" => 'nullable|exists:categories,id' // può essere nullo|verificase esite id nella tabella categories
+        // catwegory_id: può essere nullo|verificase esite id nella tabella categories
+        "category_id" => 'nullable|exists:categories,id',
+        //image: valore del max espresso in kB, il mimme specivica i formati ammesssi
+        "image" => 'nullable|image|max:4096|mimes:jpeg,bmp,png' 
     ];
     /**
      * Display a listing of the resource.
@@ -46,7 +50,7 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {   
-        // dd($request->all());
+        //dd($request->all());
         //validazione dati
         $request->validate($this->validationRules); //richiamo l'array delle valiazioni
 
@@ -67,6 +71,14 @@ class PostController extends Controller
             $count++;
         }
         $newPost->slug = $slug;
+
+        //slavataggio immagine se presnte
+        if(isset($data["image"])){
+            $path_Img = Storage::put("uploads", $data["image"]);
+        }
+        $newPost->image = $path_Img;
+        
+        //salvataggio modifiche DB
         $newPost->save();
 
         //redirect al post creato
