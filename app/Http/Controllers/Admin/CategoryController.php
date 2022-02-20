@@ -12,7 +12,7 @@ use function GuzzleHttp\Promise\all;
 class CategoryController extends Controller
 {
     protected $validationRules = [
-        "name" => 'required|string|max:100|unique:categories,name'
+        "name" => "required|string|max:100|unique:categories,name"
     ];
     /**
      * Display a listing of the resource.
@@ -63,7 +63,6 @@ class CategoryController extends Controller
      */
     public function show(Category $category)
     {
-        dd($category->all());
         return view('admin.categories.show', compact('category'));
     }
 
@@ -73,9 +72,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Category $category)
     {
-        //
+        return view('admin.categories.edit', compact('category'));
     }
 
     /**
@@ -85,9 +84,20 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Category $category)
     {
-        //
+        //validazione dati richiamnda array
+        $request->validate([
+            "name" => "required|string|max:100|unique:categories,name,{$category->id}"
+        ]);
+
+        $data = $request->all();
+        //non creare una nuova istanza di oggetti
+        $category->name = $data["name"];
+        $category->slug = Str::of($category->name)->slug('-');
+        $category->save();
+
+        return redirect()->route('categories.index', $category->id);
     }
 
     /**
@@ -96,8 +106,9 @@ class CategoryController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        return redirect()->route('categories.index');
     }
 }

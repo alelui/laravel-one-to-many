@@ -10,6 +10,7 @@
             <th scope="col">ID</th>
             <th scope="col">Titolo</th>
             <th scope="col">Slug</th>
+            <th scope="col">Categoria</th>
             <th scope="col">Stato</th>
             <th scope="col">Actions</th>
           </tr>
@@ -26,6 +27,13 @@
                 @else
                     <span class="badge badge-warning">0</span>
                 @endif
+                </td>
+                <td>
+                  @if ($post->category)
+                    <span class="badge badge-info">{{$post->category->name}}</span>
+                  @else
+                    <span>Nessuna</span>
+                  @endif
                 </td>
                 <td><a href="{{route("posts.show", $post->id)}}"><button type="button" class="btn btn-primary">Visualizza</button></a></td>
               </tr>

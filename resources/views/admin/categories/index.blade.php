@@ -20,13 +20,6 @@
                 <th scope="row">{{$category->id}}</th>
                 <td>{{$category->name}}</td>
                 <td>{{$category->slug}}</td>
-                {{-- <td>
-                @if ($post->published)
-                    <span class="badge badge-success">1</span>
-                @else
-                    <span class="badge badge-warning">0</span>
-                @endif
-                </td> --}}
                 <td><a href="{{route("categories.show", $category->id)}}"><button type="button" class="btn btn-primary">Visualizza</button></a></td>
               </tr>
             @endforeach
