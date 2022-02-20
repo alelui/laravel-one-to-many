@@ -11,21 +11,21 @@
                 <div class="card-body">
                     <form action="{{route('posts.store')}}" method="POST" enctype="multipart/form-data">
                         @csrf
-                        <div class="form-group">
+                        <div class="form-group mb-5">
                           <label for="title">Titolo</label>
                           <input type="text" class="form-control" @error('title') is-invalid @enderror id="title" name="title" placeholder="Inserire titolo">
                             @error('title')
                                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
+                        <div class="form-group mb-5">
                             <label for="content">Contenuto</label>
                             <textarea class="form-control" @error('content') is-invalid @enderror id="content" name="content" placeholder="Inserire contenuto" rows="3"></textarea>
                             @error('content')
                                 <div class="alert alert-danger mt-2">{{ $message }}</div>
                             @enderror
                           </div>
-                        <div class="form-group">
+                        <div class="form-group mb-5">
                             <label for="category">Categoria</label>
                             <select class="custom-select mb-3" @error('category_id') is-invalid @enderror  name="category_id" id="category">
                                 <option value="">Seleziona Una Categoria</option>
@@ -37,13 +37,13 @@
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
                         </div>
-                        <div class="form-group">
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="image" name="image">
-                                <label class="custom-file-label" for="customFile">Choose file</label>
+                        <div class="form-group mb-5">
+                            <div>
+                                <p class="mb-2" ><label for="image">Aggiungi un'immagine</label></p>
+                                <input type="file" id="image" name="image">
                               </div>
                         </div>
-                        <div class="form-group form-check">
+                        <div class="form-group mb-5 form-check">
                           <input type="checkbox" class="form-check-input" @error('published') is-invalid @enderror id="published" name="published">
                             @error('published')
                                 <div class="alert alert-danger mt-2">{{ $message }}</div>
