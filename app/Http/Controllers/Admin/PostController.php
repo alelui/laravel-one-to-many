@@ -143,6 +143,14 @@ class PostController extends Controller
         $post->content = $data["content"];
         $post->published = isset( $data["published"]);
         $post->category_id = $data["category_id"];
+        
+        //slavataggio immagine se presnte e cancello vecchia img
+        if(isset($data["image"])){
+            //cancella vaechia img
+            Storage::delete($post->image);
+            $path_Img = Storage::put("uploads", $data["image"]);
+        }
+        $post->image = $path_Img;
 
         $post->save();
         return view('admin.posts.show', compact("post"));

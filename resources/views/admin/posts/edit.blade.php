@@ -10,9 +10,14 @@
                     <p>Titolo: {{$post->title}}</p>
                 </div>
                 <div class="card-body">
-                    <form action="{{route('posts.update', $post->id)}}" method="POST">
+                    <form action="{{route('posts.update', $post->id)}}" method="POST" enctype="multipart/form-data">
                         @method('PUT')
                         @csrf
+                        <div class="image-box col-5 mb-3">
+                            @if ($post->image)
+                                <img class="w-100" src="{{asset("storage/$post->image")}}" alt="{{$post->title}}">
+                            @endif
+                        </div>
                         <div class="form-group">
                           <label for="title">Titolo</label>
                           <input type="text" class="form-control" @error('title') is-invalid @enderror id="title" name="title" placeholder="Inserire titolo" value="{{old('title') ? old('title') : $post->title}}">
@@ -38,6 +43,12 @@
                             @error('category_id')
                                 <div class="alert alert-danger">{{ $message }}</div>
                             @enderror
+                        </div>
+                        <div class="form-group mb-5">
+                            <div>
+                                <p class="mb-2" ><label for="image">Aggiungi un'immagine</label></p>
+                                <input type="file" id="image" name="image">
+                              </div>
                         </div>
                         <div class="form-group form-check">
                             @php
