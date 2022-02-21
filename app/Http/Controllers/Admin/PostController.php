@@ -75,9 +75,8 @@ class PostController extends Controller
         //slavataggio immagine se presnte
         if(isset($data["image"])){
             $path_Img = Storage::put("uploads", $data["image"]);
+            $newPost->image = $path_Img;
         }
-        $newPost->image = $path_Img;
-        
         //salvataggio modifiche DB
         $newPost->save();
 
@@ -148,9 +147,10 @@ class PostController extends Controller
         if(isset($data["image"])){
             //cancella vaechia img
             Storage::delete($post->image);
+            //salva nuova img
             $path_Img = Storage::put("uploads", $data["image"]);
+            $post->image = $path_Img;
         }
-        $post->image = $path_Img;
 
         $post->save();
         return view('admin.posts.show', compact("post"));
@@ -164,6 +164,9 @@ class PostController extends Controller
      */
     public function destroy(Post $post)
     {
+        if($post->image){
+            Storage::delete($post->image);
+        }
         $post->delete();
         return redirect()->route('posts.index');
     }
